@@ -405,6 +405,7 @@ void DolphinContextMenu::insertDefaultItemActions(const KFileItemListProperties&
     const bool showDeleteAction = (KSharedConfig::openConfig()->group("KDE").readEntry("ShowDeleteCommand", false) ||
                                     !properties.isLocal());
     const bool showMoveToTrashAction = (properties.isLocal() &&
+                                        properties.isOwner() &&
                                         properties.supportsMoving());
 
     if (showDeleteAction && showMoveToTrashAction) {
@@ -412,7 +413,7 @@ void DolphinContextMenu::insertDefaultItemActions(const KFileItemListProperties&
         m_removeAction = nullptr;
         addAction(m_mainWindow->actionCollection()->action(KStandardAction::name(KStandardAction::MoveToTrash)));
         addAction(m_mainWindow->actionCollection()->action(KStandardAction::name(KStandardAction::DeleteFile)));
-    } else if (showDeleteAction && !showMoveToTrashAction) {
+    } else if (showDeleteAction || !showMoveToTrashAction) {
         addAction(m_mainWindow->actionCollection()->action(KStandardAction::name(KStandardAction::DeleteFile)));
     } else {
         if (!m_removeAction) {
