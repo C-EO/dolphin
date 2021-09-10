@@ -128,6 +128,11 @@ void KFileItemModel::refreshDirectory(const QUrl &url)
     m_dirLister->openUrl(url, KDirLister::Reload);
 }
 
+void KFileItemModel::updateDirectory(const QUrl &url)
+{
+    m_dirLister->updateDirectory(url);
+}
+
 QUrl KFileItemModel::directory() const
 {
     return m_dirLister->url();
